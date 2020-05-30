@@ -3,9 +3,13 @@
 // - Modules
 // - Macros
 
-// Write a macro that passes the quiz! No hints this time, you can do it!
+// Write a macro that passes the test! No hints this time, you can do it!
+macro_rules! my_macro {
+    ($val:expr) => {
+        "Hello ".to_string() + $val
+    }    
+}
 
-// I AM NOT DONE
 
 #[cfg(test)]
 mod tests {
