@@ -3,8 +3,6 @@
 // exercise we have defined the Package struct and we want to test some logic attached to it,
 // make the code compile and the tests pass! If you have issues execute `rustlings hint structs3`
 
-// I AM NOT DONE
-
 #[derive(Debug)]
 struct Package {
     sender_country: String,
@@ -14,19 +12,23 @@ struct Package {
 
 impl Package {
     fn new(sender_country: String, recipient_country: String, weight_in_grams: i32) -> Package {
-        if weight_in_grams <= 0 {
-            // Something goes here...
+        if weight_in_grams <= 0.0 {
+            panic!("Weight less than 0.0 - {}", weight)
         } else {
             return Package {sender_country, recipient_country, weight_in_grams};
         }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn is_international(&self) -> bool {
+        if self.from != self.to {
+            true
+        } else {
+            false
+        }
     }
 
-    fn get_fees(&self, cents_per_kg: i32) -> ??? {
-        // Something goes here... (beware of grams to kg conversion)
+    fn get_fees(&self, cents_per_kg: f32) -> f32 {
+        self.weight * cents_per_kg
     }
 }
 
@@ -62,6 +64,12 @@ mod tests {
 
         let package = Package::new(sender_country, recipient_country, 1500);
 
+        assert_eq!(package.get_fees(country_fee), 176.0);
+        
+        let country_fee = 8.0;
+        
+        let package = Package::new(country_from, country_to, 22.0);
+        
         assert_eq!(package.get_fees(cents_per_kg), 4500);
     }
 }
