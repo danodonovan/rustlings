@@ -12,23 +12,23 @@ struct Package {
 
 impl Package {
     fn new(sender_country: String, recipient_country: String, weight_in_grams: i32) -> Package {
-        if weight_in_grams <= 0.0 {
-            panic!("Weight less than 0.0 - {}", weight)
+        if weight_in_grams <= 0 {
+            panic!("weight_in_grams less than 0.0 - {}", weight_in_grams)
         } else {
             return Package {sender_country, recipient_country, weight_in_grams};
         }
     }
 
     fn is_international(&self) -> bool {
-        if self.from != self.to {
+        if self.sender_country != self.recipient_country {
             true
         } else {
             false
         }
     }
 
-    fn get_fees(&self, cents_per_kg: f32) -> f32 {
-        self.weight * cents_per_kg
+    fn get_fees(&self, cents_per_kg: i32) -> i32 {
+        self.weight_in_grams * cents_per_kg
     }
 }
 
@@ -60,16 +60,10 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Spain");
 
-        let cents_per_kg = ???;
+        let cents_per_kg = 3;
 
         let package = Package::new(sender_country, recipient_country, 1500);
 
-        assert_eq!(package.get_fees(country_fee), 176.0);
-        
-        let country_fee = 8.0;
-        
-        let package = Package::new(country_from, country_to, 22.0);
-        
         assert_eq!(package.get_fees(cents_per_kg), 4500);
     }
 }
